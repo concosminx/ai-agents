@@ -1,0 +1,1052 @@
+{
+  "active": false,
+  "connections": {
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Format All Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Insert Sheets Entry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Aggregate2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Aggregate3": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Get Commits From Github",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out2": {
+      "main": [
+        [
+          {
+            "node": "Get GitHub PRs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Daily at 7PM": {
+      "main": [
+        [
+          {
+            "node": "Set Variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Variables": {
+      "main": [
+        [
+          {
+            "node": "Get Today's Emails",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get Today's Calendar Events",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create Sheet If It Doesn't Exist",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Split Out2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get GitHub PRs": {
+      "main": [
+        [
+          {
+            "node": "If it's created today",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If it's closed today",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format All Data": {
+      "main": [
+        [
+          {
+            "node": "Generate Journal Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Authors Commit": {
+      "main": [
+        [
+          {
+            "node": "Aggregate3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Today's Emails": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If it didn't exist": {
+      "main": [
+        [
+          {
+            "node": "Init Sheet Headers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Init Sheet Headers": {
+      "main": [
+        [
+          {
+            "node": "init Sheet Columns",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If it's closed today": {
+      "main": [
+        [
+          {
+            "node": "Aggregate2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If it's created today": {
+      "main": [
+        [
+          {
+            "node": "Aggregate2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Commits From Github": {
+      "main": [
+        [
+          {
+            "node": "If Authors Commit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Journal Summary": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Today's Calendar Events": {
+      "main": [
+        [
+          {
+            "node": "Aggregate1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Sheet If It Doesn't Exist": {
+      "main": [
+        [
+          {
+            "node": "If it didn't exist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-15T19:49:57.527Z",
+  "id": "CoUBogWveWvne5lm",
+  "isArchived": false,
+  "meta": null,
+  "name": "Timesheet-generator-calendar [imported]",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "returnAll": true,
+        "options": {
+          "timeMin": "={{$today.minus(1).startOf('day').toISO()}}",
+          "timeMax": "={{$today.minus(1).endOf('day').toISO()}}"
+        }
+      },
+      "id": "21084130-8555-4ff1-88d4-bbcdd3ce188c",
+      "name": "Get Today's Calendar Events",
+      "type": "n8n-nodes-base.googleCalendar",
+      "position": [
+        64,
+        608
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "filters": {
+          "receivedAfter": "={{ $now.minus(1).startOf('day').toISO() }}",
+          "sender": "={{ $json.myEmail }}"
+        }
+      },
+      "id": "1160f90a-2384-4fc7-b8c8-81d40c38fba7",
+      "name": "Get Today's Emails",
+      "type": "n8n-nodes-base.gmail",
+      "position": [
+        64,
+        352
+      ],
+      "webhookId": "0611a0b0-9e31-497f-98a9-7609c2287db1",
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "resource": "repository",
+        "operation": "getPullRequests",
+        "owner": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Set Variables').item.json.github_handle }}"
+        },
+        "repository": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $json.repositoriesToTrack }}"
+        },
+        "returnAll": true,
+        "getRepositoryPullRequestsFilters": {}
+      },
+      "id": "df5ce08a-5b41-4a32-b07b-8dd3e8c82f5d",
+      "name": "Get GitHub PRs",
+      "type": "n8n-nodes-base.github",
+      "position": [
+        -48,
+        1264
+      ],
+      "webhookId": "0ec33ec2-fbb5-4b63-afd2-7227a8dba1c4",
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get all data from different sources\nconst allInputs = $input.all();\nconst calendarEvents = allInputs.find(b => b.json.calendarEvents)?.json.calendarEvents || [];\nconst emails = allInputs.find(b => b.json.emails)?.json.emails || [];\nconst commits = allInputs.find(b => b.json.commits)?.json.commits || [];\nconst prs = allInputs.find(b => b.json.prs)?.json.prs || [];\n\n// Format calendar events\nconst confirmed = calendarEvents.filter(e => e.status === 'confirmed');\n\nconst calendarSummary = confirmed.map(event => ({\n  time: event.start?.dateTime || 'No time',\n  title: event.summary || 'No title',\n  attendees: event.attendees?.length || 0,\n  description: event.description || 'No description',\n  duration: DateTime.fromISO(event.end.dateTime).diff(DateTime.fromISO(event.start.dateTime), 'hours').hours\n}));\n\n// Format emails (filter out unimportant ones)\nconst importantEmails = emails\n  .filter(email => \n    email.From && \n    !email.From.toLowerCase().includes('noreply') && \n    !email.Subject?.toLowerCase().includes('newsletter')\n  )\n  .slice(0, 20)\n  .map(email => ({\n    from: email.From,\n    subject: email.Subject || 'No subject',\n    snippet: email.snippet?.substring(0, 100) || ''\n  }));\n\nconst commitArray = Array.isArray(commits) ? commits : [commits];\nconst prsArray = Array.isArray(prs) ? prs : [prs];\n// Format GitHub activity\nconst githubActivity = {\n  commits: commitArray.map(commit => ({\n    message: commit.commit?.message || 'No message'\n  })) || [],\n  pullRequests: prsArray.map(pr => ({\n    title: pr.title,\n    repo: pr.head.repo?.name || 'Unknown repo',\n    state: pr.state\n  })) || []\n};\n\n// Create summary object\nconst summary = {\n  date: $('Set Variables').first().json.today,\n  calendar: {\n    totalEvents: calendarSummary.length,\n    events: calendarSummary\n  },\n  emails: {\n    totalReceived: emails.length,\n    important: importantEmails\n  },\n  github: githubActivity\n};\n\nreturn [{ json: summary }];"
+      },
+      "id": "7886ae83-5896-43fa-910c-de9142227c23",
+      "name": "Format All Data",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        960,
+        832
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are a professional timesheet creator.\n\nINPUT you receive: a single JSON object that contains:\n  • calendar.events          (array)\n  • emails.important         (array)\n  • github.commits           (array)\n  • github.pullRequests      (array)\n\nTASK\n1. Walk through every element in those arrays.\n2. For each element create an object that has **exactly**:\n     - \"type\"        : CALENDAR_EVENT | EMAIL | COMMIT | PR\n     - \"description\" : ≤120 chars, no commas, no line-breaks\n3. Put all objects in one JSON **array**.\n4. RETURN  that array. No wrapper object, no markdown. Try to create a nice description for each event",
+              "role": "system"
+            },
+            {
+              "content": "=Below is today’s raw data in one JSON object.\n\n{{ JSON.stringify($json, null, 2) }}\n"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "id": "b27a2f05-ea0f-41fe-8c55-6e750bb88591",
+      "name": "Generate Journal Summary",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "position": [
+        1184,
+        832
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "emails",
+        "options": {}
+      },
+      "id": "c129160d-27c9-4485-be59-941e21a87707",
+      "name": "Aggregate",
+      "type": "n8n-nodes-base.aggregate",
+      "position": [
+        352,
+        352
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "numberInputs": 4
+      },
+      "id": "d8f0621f-e186-44dd-9650-45833dd52362",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "position": [
+        752,
+        800
+      ],
+      "typeVersion": 3.2
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "calendarEvents",
+        "options": {}
+      },
+      "id": "4fd06d50-06ba-4420-9cec-7949aafcda54",
+      "name": "Aggregate1",
+      "type": "n8n-nodes-base.aggregate",
+      "position": [
+        352,
+        608
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "prs",
+        "options": {}
+      },
+      "id": "e9785082-d362-442f-89a6-96f09b3d9678",
+      "name": "Aggregate2",
+      "type": "n8n-nodes-base.aggregate",
+      "position": [
+        448,
+        1280
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "026e5361-cfd1-4f8c-9daf-290686c31ef9",
+      "name": "Daily at 7PM",
+      "type": "n8n-nodes-base.cron",
+      "position": [
+        -624,
+        720
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4fa5acaa-f81f-4ecc-88cb-ac8b56324cf5",
+              "name": "today_date",
+              "type": "string",
+              "value": "={{ $now.format('yyyy-MM-dd') }}"
+            },
+            {
+              "id": "390ed3dd-2205-49eb-8b06-69d3affe98bd",
+              "name": "github_handle",
+              "type": "string",
+              "value": "luka-zivkovic"
+            },
+            {
+              "id": "841cc4c8-f47d-4eea-8f23-62e5e7f0f0dc",
+              "name": "repositoriesToTrack",
+              "type": "array",
+              "value": "={{ ['techPoweredGrowth', 'tech-learn'] }}"
+            },
+            {
+              "id": "df6011d8-70b8-4942-ad38-385d6c459c84",
+              "name": "myEmail",
+              "type": "string",
+              "value": ""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2e2163e6-c047-4361-9dc9-4f7ad03f81e4",
+      "name": "Set Variables",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -368,
+        720
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "commits",
+        "options": {}
+      },
+      "id": "c74d5d58-826b-4b2b-b6a1-807d406589ba",
+      "name": "Aggregate3",
+      "type": "n8n-nodes-base.aggregate",
+      "position": [
+        464,
+        912
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "46c73ee1-9ff2-4318-bad4-5e8cdb3703ff",
+              "operator": {
+                "name": "filter.operator.equals",
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.author.login }}",
+              "rightValue": "={{ $('Set Variables').item.json.github_handle }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1a42366a-1105-4fbf-95eb-ce09825657a2",
+      "name": "If Authors Commit",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        240,
+        928
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "204dc12c-e6ec-472a-b84b-d88afb571e93",
+              "operator": {
+                "type": "dateTime",
+                "operation": "exists",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.closed_at?.toDateTime().format('yyyy-MM-dd') }}",
+              "rightValue": ""
+            },
+            {
+              "id": "4495a061-a8cd-42e7-81fb-bef628667058",
+              "operator": {
+                "name": "filter.operator.equals",
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.closed_at?.toDateTime().format('yyyy-MM-dd') }}",
+              "rightValue": "={{ $('Set Variables').item.json.today_date }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b819c76f-869b-4b5c-be74-5248987f5642",
+      "name": "If it's closed today",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        160,
+        1408
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "46c73ee1-9ff2-4318-bad4-5e8cdb3703ff",
+              "operator": {
+                "type": "dateTime",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.created_at.toDateTime().format('yyyy-MM-dd') }}",
+              "rightValue": "={{ $('Set Variables').item.json.today_date }}"
+            },
+            {
+              "id": "13335ba1-acc1-4f12-8654-326d09553187",
+              "operator": {
+                "name": "filter.operator.equals",
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.user.login }}",
+              "rightValue": "={{ $('Set Variables').item.json.github_handle }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "72d4352a-9108-4fc8-af74-1c5557fd87bb",
+      "name": "If it's created today",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        160,
+        1152
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "message.content.events",
+        "options": {}
+      },
+      "id": "9b725b9a-8259-4134-b219-746ed1bc4060",
+      "name": "Split Out",
+      "type": "n8n-nodes-base.splitOut",
+      "position": [
+        1568,
+        832
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 📊 Daily Activity Tracker Workflow\n\n**Overview:** This workflow automatically collects your daily activities from multiple sources and creates a comprehensive timesheet in Google Sheets.\n\n**Key Features:**\n- 📧 Tracks important emails (filters out newsletters & no-reply)\n- 📅 Logs calendar events with duration and attendees\n- 💻 Records GitHub commits and pull requests\n- 🤖 Uses AI to generate concise activity descriptions\n- 📝 Auto-creates monthly sheets and organizes entries\n\n**Configuration:** Update the **Set Variables** node with your:\n- GitHub username\n- Email address\n- Repository names to track",
+        "height": 380,
+        "width": 640,
+        "color": 5
+      },
+      "id": "48ca3e25-d310-4b78-a51c-d38a422f8352",
+      "name": "Workflow Overview",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -928,
+        288
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 🔄 Data Collection Hub\n\n**Sources:**\n- **Gmail:** Fetches emails from today (filtered by sender)\n- **Google Calendar:** Gets confirmed events from yesterday\n- **GitHub API:** Retrieves commits via custom API call\n- **GitHub Node:** Pulls all PRs from specified repository\n\n**Note:** Calendar events use yesterday's date (`$today.minus(1)`) - adjust if needed for your timezone",
+        "height": 280,
+        "width": 480,
+        "color": 3
+      },
+      "id": "394c7aea-21f7-4495-8960-0c1b656d3711",
+      "name": "Data Collection",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 🔍 GitHub Activity Filtering\n\n**Commit Filter:**\n- Only includes commits by the configured user\n- Fetches commits from yesterday (UTC)\n\n**PR Filters:**\n1. **Created Today:** New PRs opened by the user\n2. **Closed Today:** PRs that were merged/closed\n\n**Purpose:** Ensures only relevant GitHub activity is tracked in the timesheet",
+        "height": 340,
+        "width": 580,
+        "color": 6
+      },
+      "id": "18a3ce95-e9cb-49c8-bd4c-91da44026d8a",
+      "name": "GitHub Filtering",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -80,
+        1568
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 📋 Sheet Management\n\n**Monthly Sheet Creation:**\n- Automatically creates a new sheet for each month\n- Names sheets using month name (e.g., \"January\")\n- Checks if sheet already exists to avoid duplicates\n\n**Header Row Setup:**\n- Creates empty row with Date, Type, Description columns\n- Only runs on first execution of the month",
+        "height": 280,
+        "width": 420,
+        "color": 2
+      },
+      "id": "38967859-ed69-476c-835a-9341ac3a5df6",
+      "name": "Sheet Management",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1088,
+        992
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 🔀 Data Aggregation\n\n**Purpose:** Combines multiple items into single data objects\n\n**Aggregate Nodes:**\n- **Emails → emails[]**\n- **Calendar Events → calendarEvents[]**\n- **Commits → commits[]**\n- **Pull Requests → prs[]**\n\n**Merge Node:** Combines all aggregated data into one payload for AI processing",
+        "height": 320,
+        "width": 620,
+        "color": 7
+      },
+      "id": "d0a0bbd4-8844-4996-acdb-82ed3a72813f",
+      "name": "Data Aggregation",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        688,
+        432
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 💾 Final Output\n\n**Google Sheets2 Node:**\n- Appends each activity to the current month's sheet\n- Maps AI-generated data:\n  - **Type:** CALENDAR_EVENT | EMAIL | COMMIT | PR\n  - **Description:** Concise activity summary\n  - **Date:** Today's date (YYYY-MM-DD format)\n\n**Result:** Clean, organized timesheet ready for review!",
+        "height": 280,
+        "width": 420
+      },
+      "id": "423eb077-5a9d-4ced-9267-90f37c34a40b",
+      "name": "Final Output",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1504,
+        464
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 🤖 AI Processing & Summary\n\n**Purpose:** Transform raw activity data into structured timesheet entries\n\n**Process:**\n1. **Format All Data** node consolidates data from all sources\n2. **OpenAI GPT-4o-mini** generates concise descriptions (≤120 chars)\n3. **Split Out** node separates individual events for sheet insertion\n\n**Output:** Clean, categorized entries ready for Google Sheets",
+        "height": 280,
+        "width": 540,
+        "color": 4
+      },
+      "id": "b79c0be0-a473-464f-aab9-63ced927cfcd",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1072,
+        1072
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "repositoriesToTrack",
+        "options": {}
+      },
+      "id": "5855fcc5-d847-4970-9e63-5514e749611e",
+      "name": "Split Out1",
+      "type": "n8n-nodes-base.splitOut",
+      "position": [
+        -96,
+        928
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "url": "=https://api.github.com/repos/{{ $('Set Variables').item.json.github_handle }}/{{ $json.repositoriesToTrack }}/commits?since={{ $now.minus(1).startOf('day').toUTC().toISO() }}\n  &until={{ $now.minus(1).endOf('day').toUTC().toISO() }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "options": {}
+      },
+      "id": "17a37f3a-cff2-4768-965d-b2b0810a85cb",
+      "name": "Get Commits From Github",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        64,
+        928
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $now.format('MMMM') }}"
+        },
+        "columns": {
+          "value": {
+            "Date": "={{ $now.format('yyyy-MM-dd') }}",
+            "Type": "={{ $json.type }}",
+            "Description": "={{ $json.description }}"
+          },
+          "schema": [
+            {
+              "id": "Date",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "Date",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Type",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "Type",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Description",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "Description",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            }
+          ],
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "c26538dd-2b3e-42d6-bcf4-a4448187c16e",
+      "name": "Insert Sheets Entry",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        1776,
+        832
+      ],
+      "typeVersion": 4.6
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "title": "={{ $now.format('MMMM') }}",
+        "options": {}
+      },
+      "id": "658849ef-bf67-4ab2-b45c-c496dd4f401f",
+      "name": "Create Sheet If It Doesn't Exist",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        -1216,
+        1344
+      ],
+      "typeVersion": 4.6,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "b177902a-8b12-4147-afe2-babd21126e4a",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.title }}",
+              "rightValue": ""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cfd1559f-697c-496b-9672-7c1c2dbefda5",
+      "name": "If it didn't exist",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        -1008,
+        1344
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2e5a5c68-ec1c-4307-b7ab-4db2d0a510d7",
+              "name": "Date",
+              "type": "string",
+              "value": ""
+            },
+            {
+              "id": "18823857-3297-4349-87df-42c364680f70",
+              "name": "Type",
+              "type": "string",
+              "value": ""
+            },
+            {
+              "id": "1806a29c-c5d8-4e6f-ace9-dc2750b4b88c",
+              "name": "Description",
+              "type": "string",
+              "value": ""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fbb547bf-e396-4bc5-a9ce-d8ca4d426cba",
+      "name": "Init Sheet Headers",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -784,
+        1344
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Create Sheet If It Doesn't Exist').item.json.title }}"
+        },
+        "columns": {
+          "value": {},
+          "schema": [
+            {
+              "id": "Date",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "Date",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Type",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "Type",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Description",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "Description",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            }
+          ],
+          "mappingMode": "autoMapInputData",
+          "matchingColumns": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "6217f2f5-e3fb-4b35-afa1-b4537aa45aee",
+      "name": "init Sheet Columns",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        -560,
+        1344
+      ],
+      "typeVersion": 4.6
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "repositoriesToTrack",
+        "options": {}
+      },
+      "id": "836d5472-8207-4bd3-926d-46444ab73eae",
+      "name": "Split Out2",
+      "type": "n8n-nodes-base.splitOut",
+      "position": [
+        -304,
+        1184
+      ],
+      "typeVersion": 1
+    }
+  ],
+  "pinData": {},
+  "repo_name": "ai-agents",
+  "repo_owner": "concosminx",
+  "repo_path": "n8n-backup",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-15T19:49:57.527Z",
+      "updatedAt": "2025-09-15T19:49:57.527Z",
+      "role": "workflow:owner",
+      "workflowId": "CoUBogWveWvne5lm",
+      "projectId": "xcywV0hidlkrSz4y"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-09-15T19:50:02.298Z",
+      "updatedAt": "2025-09-15T19:50:02.298Z",
+      "id": "yiMXk05VOtrBQMh8",
+      "name": "google"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-15T19:50:04.534Z",
+  "versionId": "5302bec1-b445-4603-a839-83d5e381da4e"
+}
