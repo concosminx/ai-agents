@@ -1,0 +1,242 @@
+{
+  "active": false,
+  "connections": {
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "File added to Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Download the new File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download the new File": {
+      "main": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-08-01T18:27:39.977Z",
+  "id": "DChKQGuxExHb50OZ",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "RAG-Pinecone-ingestion-pipeline [git]",
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "insert",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "n8n",
+          "mode": "list",
+          "cachedResultName": "n8n"
+        },
+        "options": {
+          "pineconeNamespace": "Data"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1,
+      "position": [
+        848,
+        -128
+      ],
+      "id": "760ce164-b11f-421d-8fff-891181c74626",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "SgKKSvQoxgOs19oi",
+          "name": "PineconeApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        816,
+        96
+      ],
+      "id": "5001f635-26fd-4b54-b524-3d5d6c88788b",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "5yyTWzOpDb6uiysy",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        944,
+        96
+      ],
+      "id": "6f12c0ff-cf5e-4e9e-808f-032099e9473a",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        304
+      ],
+      "id": "3ebfd9c0-4719-43f8-b34a-b97c1989a2c5",
+      "name": "Recursive Character Text Splitter"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "custom",
+              "cronExpression": "*/30 * * * *"
+            }
+          ]
+        },
+        "authentication": "serviceAccount",
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1EwPWMietNsiaLFDiVwBa-PdvmrOD-s2W",
+          "mode": "list",
+          "cachedResultName": "Rag-Input",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1EwPWMietNsiaLFDiVwBa-PdvmrOD-s2W"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        368,
+        -128
+      ],
+      "id": "122156c7-0ff4-44d2-8a83-149b677321f2",
+      "name": "File added to Google Drive",
+      "credentials": {
+        "googleApi": {
+          "id": "6Ve2jX7JcXlgXzFv",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        592,
+        -128
+      ],
+      "id": "2f691405-9065-48c4-b06a-c78d1cf3c012",
+      "name": "Download the new File",
+      "credentials": {
+        "googleApi": {
+          "id": "6Ve2jX7JcXlgXzFv",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Ingestion pipeline from Google Drive -> Pinecone\n\nNaive approach, no tests for existing data, hashing etc.",
+        "height": 240,
+        "width": 432
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        80,
+        96
+      ],
+      "typeVersion": 1,
+      "id": "9627a379-cfc3-4e30-8d4a-1f13cfabcb7d",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "ai-agents",
+  "repo_owner": "concosminx",
+  "repo_path": "n8n-backup",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-08-01T18:27:39.977Z",
+      "updatedAt": "2025-08-01T18:27:39.977Z",
+      "role": "workflow:owner",
+      "workflowId": "DChKQGuxExHb50OZ",
+      "projectId": "xcywV0hidlkrSz4y"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-16T08:47:37.672Z",
+  "versionId": "70308b39-3ab6-4ebf-b1a1-3631ffd3a32c"
+}
