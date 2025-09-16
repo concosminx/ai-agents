@@ -1,0 +1,610 @@
+{
+  "active": false,
+  "connections": {
+    "Limit: 1Page": {
+      "main": [
+        [
+          {
+            "node": "Delete First Empty Slide",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CopyPdfTemplate": {
+      "main": [
+        [
+          {
+            "node": "Get Created Presentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Limit: 1Page",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create An Empty Slide",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Pdf File Name": {
+      "main": [
+        [
+          {
+            "node": "CopyPdfTemplate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter: Only Images": {
+      "main": [
+        [
+          {
+            "node": "Sort by Created Date",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sort by Created Date": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert slides to PDF": {
+      "main": [
+        [
+          {
+            "node": "Upload Final PDF File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create An Empty Slide": {
+      "main": [
+        [
+          {
+            "node": "Update Image Permissions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Image To The Slide": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete First Empty Slide": {
+      "main": [
+        [
+          {
+            "node": "Convert slides to PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Created Presentation": {
+      "main": [
+        [
+          {
+            "node": "Get Folder Id w Presentation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Image Permissions": {
+      "main": [
+        [
+          {
+            "node": "Add Image To The Slide",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Folder Id w Presentation": {
+      "main": [
+        [
+          {
+            "node": "Get All Files From the Folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Files From the Folder": {
+      "main": [
+        [
+          {
+            "node": "Filter: Only Images",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Set Pdf File Name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-15T20:08:41.190Z",
+  "id": "d5S11YkwPEUkTWqx",
+  "isArchived": false,
+  "meta": null,
+  "name": "PDF-from-GDrive-Images [imported]",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "96edcfe3-a7a3-477e-88e4-28bb4e870728",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        464,
+        448
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "createdTime"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "536bafbe-133e-4568-aba4-ff6b4643f891",
+      "name": "Sort by Created Date",
+      "type": "n8n-nodes-base.sort",
+      "position": [
+        1968,
+        448
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "e7f70fdc-7cf6-4f4a-a1f2-e755324113ad",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "position": [
+        2192,
+        448
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "operation": "share",
+        "fileId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('Sort by Created Date').item.json.id }}"
+        },
+        "permissionsUi": {
+          "permissionsValues": {
+            "role": "reader",
+            "type": "anyone"
+          }
+        },
+        "options": {}
+      },
+      "id": "3ad78a26-5faf-4269-ad1c-7ad65ad1a70b",
+      "name": "Update Image Permissions",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        2624,
+        448
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('CopyPdfTemplate').item.json.id }}"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "application/pdf",
+              "slidesToFormat": "application/pdf"
+            }
+          }
+        }
+      },
+      "id": "e690c45f-81a3-4b08-92b0-635ff62be486",
+      "name": "Convert slides to PDF",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        2848,
+        240
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "keep": "lastItems"
+      },
+      "id": "98342b07-192c-4c6c-bea8-7faa5b81ca1d",
+      "name": "Limit: 1Page",
+      "type": "n8n-nodes-base.limit",
+      "position": [
+        2400,
+        240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "12999f01-4775-46ab-bc60-1c1e68a3c4d2",
+              "operator": {
+                "name": "filter.operator.equals",
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.mimeType }}",
+              "rightValue": "image/png"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0d7f89da-d724-4e2b-a9ac-6a808b3bf136",
+      "name": "Filter: Only Images",
+      "type": "n8n-nodes-base.filter",
+      "position": [
+        1744,
+        448
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "name": "={{ $('Set Pdf File Name').item.json.presentation_title }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('Get Folder Id w Presentation').item.json.parents[0] }}"
+        },
+        "options": {}
+      },
+      "id": "b4106df0-555e-446b-9773-878254895220",
+      "name": "Upload Final PDF File",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        3072,
+        240
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "content": "## 📚 Create a PDF from Google Drive Images\n\nThis workflow takes all images from a Google Drive folder you specify, sorts them by creation date, and compiles them into a single PDF using a Google Slides template.\n\n**Key Things to Know Before You Start:**\n\n  **Set Your File Name:**\n- Go to the **'Set Pdf File Name'** node \n- Update the `presentation_title` value with your desired PDF name.\n\n🔑 **Connect Google Accounts:**\n- Authenticate your Google Drive & Google Slides accounts in all relevant Google nodes and HTTP nodes.\n\n📏 **Use a Google Slides Template for Custom Page Size:**\n- Google Slides defaults to a 16:9 aspect ratio. If you need specific PDF dimensions (e.g., A4, US Letter, square), **first create a Google Slides file with your desired page size.**\n- Then, select this custom Google Slides file in the **'CopyPdfTemplate'** node (under 'File').\n\n🖼️ **Image & Folder Setup:**\n- In the **'CopyPdfTemplate'** node, also select the Google Drive **Folder** where your source images are located. The copied presentation and final PDF will also be created here.\n- The workflow filters for `.png` images by default. To use other types (like JPG), update the **'Filter: Only Images'** node.\n\n⚠️ **Image Size & Workflow Limits:**\n- Google Slides may have limitations on individual image size and the overall PDF file size when exporting.\n- This workflow works well for smaller presentations (10–20 pages). Larger files may run into errors or performance issues during export.\n\n💰 **Cost:** Free to use (relies on standard Google API calls, which are generally within free tier limits for typical usage).",
+        "height": 1020,
+        "width": 400,
+        "color": 4
+      },
+      "id": "a4768415-9b54-4b03-b168-2d3536f3652c",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b994aa5e-1580-43f6-90b0-f0ea8efd9614",
+              "name": "presentation_title",
+              "type": "string",
+              "value": "[Your PDF Name Here]"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "98ecc16b-63fa-4f94-bf36-5ffa611bdb8c",
+      "name": "Set Pdf File Name",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        688,
+        448
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://slides.googleapis.com/v1/presentations/{{ $('Get Created Presentation').item.json.presentationId }}:batchUpdate",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSlidesOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"requests\": [\n    {\n      \"deleteObject\": {\n        \"objectId\": \"{{ $('Get Created Presentation').item.json.slides[0].objectId }}\" \n      } \n    } \n  ]\n}",
+        "options": {}
+      },
+      "id": "dff313f1-9da2-4e5c-89ad-d5f8999f6985",
+      "name": "Delete First Empty Slide",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        2624,
+        240
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "operation": "copy",
+        "fileId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "1_Mfgb7lUD8tXRg3cXeIQXjQ9vgCG-TzwOoWVok_ROQ8",
+          "cachedResultUrl": "https://docs.google.com/presentation/d/1_Mfgb7lUD8tXRg3cXeIQXjQ9vgCG-TzwOoWVok_ROQ8/edit?usp=drivesdk",
+          "cachedResultName": "Book_Template"
+        },
+        "name": "={{ $json.presentation_title }}",
+        "sameFolder": false,
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "",
+          "cachedResultUrl": "",
+          "cachedResultName": ""
+        },
+        "options": {}
+      },
+      "id": "ad3b2660-55bf-4590-93da-fcf4f13eb484",
+      "name": "CopyPdfTemplate",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        912,
+        448
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "presentationId": "={{ $('CopyPdfTemplate').item.json.id }}"
+      },
+      "id": "682e7514-ff97-4791-8ba1-454c14814955",
+      "name": "Get Created Presentation",
+      "type": "n8n-nodes-base.googleSlides",
+      "position": [
+        1120,
+        448
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "url": "=https://www.googleapis.com/drive/v3/files/{{ $json.presentationId }}?fields=parents",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "options": {}
+      },
+      "id": "1a068b80-1364-41be-888f-f3c05bca0562",
+      "name": "Get Folder Id w Presentation",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1328,
+        448
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "=",
+        "returnAll": true,
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "={{ $json.parents[0] }}"
+          }
+        },
+        "options": {
+          "fields": [
+            "*"
+          ]
+        }
+      },
+      "id": "fbbb36f0-11b0-4f06-8146-0f94423186d7",
+      "name": "Get All Files From the Folder",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        1520,
+        448
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://slides.googleapis.com/v1/presentations/{{ $('CopyPdfTemplate').item.json.id }}:batchUpdate",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSlidesOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"requests\": [\n    {\n      \"createSlide\": {\n        \"slideLayoutReference\": {\n          \"predefinedLayout\": \"BLANK\"\n          \n        } \n      } \n    } \n  ]\n}",
+        "options": {}
+      },
+      "id": "46ffb17c-e7e9-4011-b4fe-dc3123282efb",
+      "name": "Create An Empty Slide",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        2400,
+        448
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://slides.googleapis.com/v1/presentations/{{ $('CopyPdfTemplate').item.json.id }}:batchUpdate",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSlidesOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"requests\": [\n    {\n      \"createImage\": {\n        \"url\": \"{{ $('Sort by Created Date').item.json.webContentLink }}\",\n        \"elementProperties\": {\n           \"size\": {\n            \"width\": {\n              \"unit\": \"{{ $('Get Created Presentation').item.json.pageSize.width.unit }}\",\n              \"magnitude\": {{ $('Get Created Presentation').item.json.pageSize.width.magnitude }}\n            },\n            \"height\": {\n              \"unit\": \"{{ $('Get Created Presentation').item.json.pageSize.height.unit }}\",\n              \"magnitude\": {{ $('Get Created Presentation').item.json.pageSize.height.magnitude }}\n            }\n          },\n  \"transform\": {\n    \"scaleX\":  1,\n    \"scaleY\":  1,\n    \"translateX\": 0,\n    \"translateY\": 0,\n    \"unit\": \"PT\"\n  },\n          \"pageObjectId\": \"{{ $('Create An Empty Slide').item.json.replies[0].createSlide.objectId }}\" \n        } \n      } \n    } \n  ]\n}",
+        "options": {}
+      },
+      "id": "6652d7b3-d439-4a40-8fa7-8a0676b37c06",
+      "name": "Add Image To The Slide",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        2848,
+        528
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "content": "## Configure Template & Image Folder\n\n⚙️ In the **'CopyPdfTemplate'** node configure:\n\n1.  **File -> From list:** Select your Google Slides template file. This will be the base for your PDF. If you want book orientation, it should be specified in the template in File-> Page Setup\n\n2.  **Parent Folder -> From list:** Choose the Google Drive folder where your source images are located.\n\n➡️ **Important:** The workflow will create the final PDF in the *same folder* where you have your images",
+        "height": 620,
+        "width": 440,
+        "color": 6
+      },
+      "id": "b63d5830-b580-468e-9055-b81a5dff33dd",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        848,
+        64
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Image Filter Information\n\n🖼️ **Image Format Note** \n\nThis workflow is preset to find and process `.png` images from your Google Drive folder (using MIME type `image/png`).\n\nIf you're using other image formats (e.g., JPG, GIF), you'll need to update the **'Filter: Only Images'** node.\n\nSpecifically, change the filter condition from `image/png` to the correct MIME type for your image files (e.g., `image/jpeg` for JPGs).",
+        "height": 600,
+        "width": 420,
+        "color": 6
+      },
+      "id": "8542f981-02c0-4f23-bb08-9b6985dbffc3",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1680,
+        64
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## How the Image-to-Slide Process Works\n\n🔄 **How Images Are Added to Slides** \n1.  The workflow fetches all images (that pass the filter) from your specified Google Drive folder.\n2.  It sorts these images by their creation date.\n3.  For each image, the workflow:\n    a. Creates a new blank slide in your Google Slides presentation.\n    b. Updates the image's permissions in Google Drive to be publicly readable (this is a temporary step, necessary for the Google Slides API to insert the image using its URL).\n    c. Adds the image to the new slide, fitting it to the slide's dimensions.\n\n**Final Touch:** After all images are added, the *very first slide* of the presentation (which is a blank page from your template) is deleted.",
+        "height": 340,
+        "width": 840,
+        "color": 6
+      },
+      "id": "3252a71e-e7d5-4b2d-87c0-e700c2bd983f",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2144,
+        752
+      ],
+      "typeVersion": 1
+    }
+  ],
+  "pinData": {},
+  "repo_name": "ai-agents",
+  "repo_owner": "concosminx",
+  "repo_path": "n8n-backup",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-15T20:08:41.190Z",
+      "updatedAt": "2025-09-15T20:08:41.190Z",
+      "role": "workflow:owner",
+      "workflowId": "d5S11YkwPEUkTWqx",
+      "projectId": "xcywV0hidlkrSz4y"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-15T20:08:41.190Z",
+  "versionId": "8b98c126-ef9e-469f-9f55-1cfedfcb32bc"
+}
