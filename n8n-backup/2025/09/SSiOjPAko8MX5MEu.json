@@ -1,0 +1,621 @@
+{
+  "active": false,
+  "connections": {
+    "Call": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar2": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Receipt": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Invoice": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-14T15:42:00.257Z",
+  "id": "SSiOjPAko8MX5MEu",
+  "isArchived": false,
+  "meta": null,
+  "name": "Simple-Webhooks-samples [imported]",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "call",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "97caf66d-b243-442a-b3c8-4494d83d4d9a",
+      "name": "Call",
+      "webhookId": "e018c24b-6c38-4df5-b798-e796fbdeea08",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://services.leadconnectorhq.com/hooks/t9Oq9bMWtOjZsfpDCFVa/webhook-trigger/9611e35b-e3ea-4693-9571-9d5a1d4a7f3e",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ $json.body.name }}"
+            },
+            {
+              "name": "key",
+              "value": "call"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "b9fc9a2c-9b2a-4964-aefb-0b45cd1931c2",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "Call has been successfully initiated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        448,
+        0
+      ],
+      "id": "0ed1d2b5-cf63-4920-9dd7-fd53aeb44435",
+      "name": "Respond to Webhook2"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        512
+      ],
+      "id": "1d8c936b-3ab4-4d1a-ac67-965860321301",
+      "name": "Respond to Webhook3"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.message }}",
+        "options": {
+          "systemMessage": "=You are a highly efficient AI assistant designed to manage calendar events and ensure seamless communication with attendees.\n\nToday’s date: {{ $now }}\nYour primary functions:\n1. Searching, creating, and updating events\n2. Create or update a row in the Google Sheet with the calendar title, description, ID, and length\nSearch First – Always search for an existing event before creating a new one.\nNo Duplicates – If an event already exists and needs modifications, update it instead of creating a new one.\nRelative Dates – Ensure new events are scheduled relative to today’s date.\nConfirmation Output – Always return a clear response with event details, including a direct link to the calendar event.\nAutomated Google Sheets Notification – When a new event is created or updated, automatically send a data to the google sheet.\nDo not create new calendar events or new email threads if the user wants to change or update an existing an existing calendar event\nIf there's no time provided for the calendar invite, please assume it's 1 hour in length\nOutput Format:\nIf searching: Display matching events or indicate none were found.\nIf creating: Confirm the event details, provide the calendar link, and trigger an email notification to the attendee.\nIf updating: Confirm the changes made, provide the updated calendar link, and send an update email by replying to the existing email thread.\nStay efficient, accurate, and proactive in communication while avoiding unnecessary event duplication."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        224,
+        512
+      ],
+      "id": "f18638fc-705b-4bdc-b629-bb786ddde0ae",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "calendar": {
+          "__rl": true,
+          "value": "e65463fc466fd521dc1ecc1964b4d6dbac77710e2a00f0a73b597f41477d9def@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "AI Agent"
+        },
+        "eventId": "={{ $fromAI(\"eventID\", \"ID of event\") }}",
+        "updateFields": {
+          "end": "={{ $fromAI(\"endTime\", \"end time of event\") }}",
+          "start": "={{ $fromAI(\"startTime\", \"start time of event\") }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        688,
+        720
+      ],
+      "id": "825f5f69-b467-486f-8525-eb12e23f4f64",
+      "name": "Google Calendar2"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "e65463fc466fd521dc1ecc1964b4d6dbac77710e2a00f0a73b597f41477d9def@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "AI Agent"
+        },
+        "start": "={{ $fromAI(\"start\", \"this is the start time of the event\") }}",
+        "end": "={{ $fromAI(\"end\", \"This is the end time of the event\") }}",
+        "additionalFields": {
+          "attendees": [],
+          "summary": "={{ $fromAI(\"summary\", \"this is the summary of th eve t\") }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        512,
+        720
+      ],
+      "id": "33daf290-4676-4019-bf78-13a6afca5648",
+      "name": "Google Calendar1"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "e65463fc466fd521dc1ecc1964b4d6dbac77710e2a00f0a73b597f41477d9def@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "AI Agent"
+        },
+        "timeMax": "={{ $now.plus({ day: 1 }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        352,
+        720
+      ],
+      "id": "291acec1-b165-411b-ae68-607d8e3edb3e",
+      "name": "Google Calendar"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        48,
+        720
+      ],
+      "id": "2457fc72-f7d4-4e4c-ba62-3f6b81036d62",
+      "name": "OpenAI Chat Model"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "Invoice has been successfully sent",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        448,
+        160
+      ],
+      "id": "c575406e-e8f5-45dd-8e05-f4f9cc317619",
+      "name": "Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "Line items have been successfully parsed and added to the Google Sheet",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        352
+      ],
+      "id": "472bf47d-27f0-40ad-83bc-769e2a66af33",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "body.items",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        224,
+        352
+      ],
+      "id": "98413267-7e90-4be4-9123-1d0bc5b82f58",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://services.leadconnectorhq.com/hooks/t9Oq9bMWtOjZsfpDCFVa/webhook-trigger/9611e35b-e3ea-4693-9571-9d5a1d4a7f3e",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "Jono Catliff"
+            },
+            {
+              "name": "key",
+              "value": "invoice"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        160
+      ],
+      "id": "04e890e3-9e68-495e-bbbb-6c892f01ef9f",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "agent",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        512
+      ],
+      "id": "17443374-9f2e-4516-ba06-b118cb4ceef6",
+      "name": "AI Agent",
+      "webhookId": "49f17f16-917f-44c8-9ae1-789832cecb17"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "receipt",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        352
+      ],
+      "id": "02a213b1-bb8f-4798-be09-39d0cd594444",
+      "name": "Parse Receipt",
+      "webhookId": "49f17f16-917f-44c8-9ae1-789832cecb17",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "invoice",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        160
+      ],
+      "id": "c20f3ea1-b4b2-4c21-8561-a3f94d657c20",
+      "name": "Send Invoice",
+      "webhookId": "49f17f16-917f-44c8-9ae1-789832cecb17",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1rP_RrQERBF_J5yMu-zgHI3ezaOlB8r5T4yOHqyMN2ys",
+          "mode": "list",
+          "cachedResultName": "Receipts - ChatGPT",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1rP_RrQERBF_J5yMu-zgHI3ezaOlB8r5T4yOHqyMN2ys/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1rP_RrQERBF_J5yMu-zgHI3ezaOlB8r5T4yOHqyMN2ys/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Quantity": "={{ $json.quantity }}",
+            "Tax": "={{ $json.tax }}",
+            "Total": "={{ $json.total }}",
+            "Description": "={{ $json.description }}",
+            "Date": "={{ $('Parse Receipt').item.json.body.date }}",
+            "Title": "={{ $('Parse Receipt').item.json.body.title }}",
+            "Invoice #": "={{ $('Parse Receipt').item.json.body.invoice_number }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Invoice #",
+              "displayName": "Invoice #",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Quantity",
+              "displayName": "Quantity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tax",
+              "displayName": "Tax",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Total",
+              "displayName": "Total",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        448,
+        352
+      ],
+      "id": "e1891702-7ba4-4a1e-8393-48e4ee993986",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleApi": {
+          "id": "6Ve2jX7JcXlgXzFv",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.headers['openai-conversation-id'] }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        192,
+        720
+      ],
+      "id": "b07eae05-37f3-4868-aa4b-1d868ff9ae45",
+      "name": "Window Buffer Memory"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "ai-agents",
+  "repo_owner": "concosminx",
+  "repo_path": "n8n-backup",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-14T15:42:00.257Z",
+      "updatedAt": "2025-09-14T15:42:00.257Z",
+      "role": "workflow:owner",
+      "workflowId": "SSiOjPAko8MX5MEu",
+      "projectId": "xcywV0hidlkrSz4y"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-16T08:49:13.074Z",
+  "versionId": "82f446b3-4a43-4c57-a170-bafae1aa92ad"
+}
