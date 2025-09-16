@@ -1,0 +1,248 @@
+{
+  "active": false,
+  "connections": {
+    "Google Sheets1": {
+      "main": [
+        [
+          {
+            "node": "Filter1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate1": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Gmail1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-14T15:35:04.567Z",
+  "id": "LEJmc3YE6NXrE9Xv",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "NO-AI-Leads-reporting [imported]",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "documentId": {
+          "__rl": true,
+          "value": "12zqeAczdRpKQQ9g03zfy55gCrtWMlqdjSOALeMhMKnA",
+          "mode": "list",
+          "cachedResultName": "n8n Leads v2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12zqeAczdRpKQQ9g03zfy55gCrtWMlqdjSOALeMhMKnA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12zqeAczdRpKQQ9g03zfy55gCrtWMlqdjSOALeMhMKnA/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Date",
+              "lookupValue": "={{ $today }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        560,
+        144
+      ],
+      "id": "449f9554-6105-4dce-b55c-e57e021b36dd",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleApi": {
+          "id": "6Ve2jX7JcXlgXzFv",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1008,
+        144
+      ],
+      "id": "95ce80f6-7bd6-4b7e-84e7-35d638e11d58",
+      "name": "Aggregate1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a7fa324b-ddbb-449a-9863-523165321281",
+              "leftValue": "={{ $json.Called }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "bf1b6c90-69f3-499b-b848-2703238ff49e",
+              "leftValue": "={{ $json.Rejected }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        784,
+        144
+      ],
+      "id": "ce47bde2-47aa-4d99-b1e1-cf731bdf6f7f",
+      "name": "Filter1"
+    },
+    {
+      "parameters": {
+        "sendTo": "concosminx@gmail.com",
+        "subject": "List of new leads",
+        "emailType": "text",
+        "message": "={{ $json.text }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1456,
+        144
+      ],
+      "id": "027bbc39-65f2-4021-8cfc-f9e5ef2f13b4",
+      "name": "Gmail1",
+      "webhookId": "42f09698-6c1a-4eed-b508-41b6fe6c5b3c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "3oW8vClE5N8kcXX5",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const people = items[0].json.data;\n\nconst textOutput = people.map(person => \n    `Name: ${person[\"First Name\"]} ${person[\"Last Name\"]}\\n` +\n    `Email: ${person[\"Email\"]}\\n` +\n    `Budget: ${person[\"Budget \"]}\\n` +\n    `Message: ${person[\"Message\"]}`\n).join(\"\\n\\n\"); // Joins all person entries with a blank line in between\n\nreturn [{ json: { text: textOutput } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1232,
+        144
+      ],
+      "id": "8c324c17-24c3-4467-bf7f-282fe8a3e388",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 19
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        336,
+        144
+      ],
+      "id": "2a5c182f-80e9-407b-9fa8-eb790063b9fe",
+      "name": "Schedule Trigger1"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "ai-agents",
+  "repo_owner": "concosminx",
+  "repo_path": "n8n-backup",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-14T15:35:04.567Z",
+      "updatedAt": "2025-09-14T15:35:04.567Z",
+      "role": "workflow:owner",
+      "workflowId": "LEJmc3YE6NXrE9Xv",
+      "projectId": "xcywV0hidlkrSz4y"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-16T08:46:21.979Z",
+  "versionId": "83ac2e71-0c83-4948-a319-961c4623d134"
+}
