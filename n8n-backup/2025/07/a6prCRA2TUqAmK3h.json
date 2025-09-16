@@ -1,0 +1,109 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-07-20T05:51:58.928Z",
+  "id": "a6prCRA2TUqAmK3h",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "NO-AI-first-flow-with-Discord",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "7d6c8e74-9216-400d-af0a-6667fb2f6ff9",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "Hello from n8n",
+        "options": {},
+        "embeds": {
+          "values": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "f6331439-a8f7-49b5-b9e1-28c600006f39",
+      "name": "Discord",
+      "webhookId": "7f6f0a31-19e3-43b9-b523-64425884f1e4",
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "Ylq7Z4WUVE2dCrvF",
+          "name": "Discord Webhook account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "ai-agents",
+  "repo_owner": "concosminx",
+  "repo_path": "n8n-backup",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-07-20T05:51:58.928Z",
+      "updatedAt": "2025-07-20T05:51:58.928Z",
+      "role": "workflow:owner",
+      "workflowId": "a6prCRA2TUqAmK3h",
+      "projectId": "xcywV0hidlkrSz4y"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-09-15T12:37:32.946Z",
+      "updatedAt": "2025-09-15T12:37:32.946Z",
+      "id": "blOBqRIQdixl53cM",
+      "name": "stable"
+    },
+    {
+      "createdAt": "2025-09-15T12:37:31.579Z",
+      "updatedAt": "2025-09-15T12:37:31.579Z",
+      "id": "61FLAvTKHhCWyLHa",
+      "name": "git"
+    },
+    {
+      "createdAt": "2025-09-15T12:36:34.563Z",
+      "updatedAt": "2025-09-15T12:36:34.563Z",
+      "id": "Rlq1ETzzns7y4h8N",
+      "name": "discord"
+    },
+    {
+      "createdAt": "2025-09-15T12:36:31.403Z",
+      "updatedAt": "2025-09-15T12:36:31.403Z",
+      "id": "IhZpsM0osXUajoO6",
+      "name": "no-ai"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-16T08:44:34.759Z",
+  "versionId": "06296272-f5ba-4649-8fc2-e48f514dcbbd"
+}
