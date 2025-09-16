@@ -345,11 +345,11 @@
       "parameters": {
         "conditions": {
           "options": {
-            "leftValue": "",
             "caseSensitive": true,
-            "typeValidation": "strict"
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
           },
-          "combinator": "and",
           "conditions": [
             {
               "id": "45ce825e-9fa6-430c-8931-9aaf22c42585",
@@ -371,7 +371,8 @@
               "leftValue": "={{ $json.error }}",
               "rightValue": ""
             }
-          ]
+          ],
+          "combinator": "and"
         },
         "options": {}
       },
@@ -509,17 +510,17 @@
         "operation": "edit",
         "owner": {
           "__rl": true,
-          "mode": "",
-          "value": "={{ $('Config').first().item.repo_owner }}"
+          "value": "={{ $('Config').item.json.repo_owner }}",
+          "mode": ""
         },
         "repository": {
           "__rl": true,
-          "mode": "",
-          "value": "={{ $('Config').first().item.repo_name }}"
+          "value": "={{ $('Config').item.json.repo_name }}",
+          "mode": ""
         },
-        "filePath": "={{ $('Config').first().item.repo_path }}{{ $json.subPath }}{{$('Execute Workflow Trigger').first().json.id}}.json",
+        "filePath": "={{ $('Config').item.json.repo_path }}{{ $json.subPath }}{{ $('Loop Over Items').item.json.id }}.json",
         "fileContent": "={{$('isDiffOrNew').item.json[\"n8n_data_stringy\"]}}",
-        "commitMessage": "={{$('Execute Workflow Trigger').first().json.name}} ({{$json.github_status}})"
+        "commitMessage": "={{ $('Loop Over Items').item.json.name }} ({{$json.github_status}})"
       },
       "id": "589b40c4-0e76-4f23-b269-0a609b157c86",
       "name": "Edit existing file",
@@ -722,15 +723,15 @@
         "operation": "get",
         "owner": {
           "__rl": true,
-          "mode": "",
-          "value": "={{ $('Config').first().item.repo_owner }}"
+          "value": "={{ $json.repo_owner }}",
+          "mode": ""
         },
         "repository": {
           "__rl": true,
-          "mode": "",
-          "value": "={{ $('Config').first().item.repo_name }}"
+          "value": "={{ $json.repo_name }}",
+          "mode": ""
         },
-        "filePath": "={{ $('Config').first().item.repo_path }}{{ $('Execute Workflow Trigger').first().json.createdAt.split('-')[0] }}/{{ $('Execute Workflow Trigger').first().json.createdAt.split('-')[1] }}/{{$json.id}}.json",
+        "filePath": "={{ $json.repo_path }}/{{ $('Loop Over Items').item.json.createdAt.split('-')[0] }}/{{ $('Loop Over Items').item.json.createdAt.split('-')[1] }}/{{$json.id}}.json",
         "asBinaryProperty": false,
         "additionalParameters": {}
       },
@@ -808,6 +809,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-09-16T17:07:55.979Z",
-  "versionId": "3b7453e0-9702-4f23-9d45-69fee433bcc1"
+  "updatedAt": "2025-09-16T17:15:02.482Z",
+  "versionId": "85108ee3-0a2c-4385-8f3f-f16cd7b3dae5"
 }
